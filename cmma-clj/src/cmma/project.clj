@@ -48,10 +48,11 @@
 (defn project-root-path
   ([] (project-root-path (io/file (System/getProperty "user.dir"))))
   ([working-dir]
-   (if (or (.exists (io/file (str (.getPath working-dir) "/project.edn")))
-            (nil? working-dir))
-      (str (.getPath working-dir) "/")
-      (recur (io/file (.getParent working-dir))))))
+   (if (nil? working-dir)
+     (str "/")
+     (if (.exists (io/file (str (.getPath working-dir) "/project.edn")))
+       (str (.getPath working-dir) "/")
+       (recur (io/file (.getParent working-dir)))))))
 
 (defn project-str []
   (str (or (project-root-path) "") "project.edn"))
