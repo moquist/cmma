@@ -49,7 +49,7 @@
   ([] (project-root-path (io/file (System/getProperty "user.dir"))))
   ([working-dir]
    (if (nil? working-dir)
-     (str "/")
+     nil
      (if (.exists (io/file (str (.getPath working-dir) "/project.edn")))
        (str (.getPath working-dir) "/")
        (recur (io/file (.getParent working-dir)))))))
